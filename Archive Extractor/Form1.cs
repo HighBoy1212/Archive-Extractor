@@ -29,6 +29,8 @@ namespace Archive_Extractor
 
         private void miOpen_Click(object sender, EventArgs e)
         {
+            // Clear out the old rows data if there are any
+            dgvContent.Rows.Clear();
             // Open the open file dialog and store the result it returns
             DialogResult drResult = ofdOpenFile.ShowDialog();
             // Open and display file information if the dialog result is "OK"
@@ -143,7 +145,7 @@ namespace Archive_Extractor
                 // Open the archive file to read the data from
                 fsCurrentFile = File.Open(strCurrentPath, FileMode.Open, FileAccess.Read);
                 // Open/create the extrcted file
-                using (FileStream fsExtractedFile = File.Open(strDirName + "\\" + strFileName, FileMode.Create, FileAccess.Write))
+                using (FileStream fsExtractedFile = File.Open(sfdSaveFile.FileName, FileMode.Create, FileAccess.Write))
                 {
                     int iBytesRead;
                     byte[] byBuffer = new byte[4096];
@@ -168,7 +170,6 @@ namespace Archive_Extractor
                             }
                             else
                             {
-                                iTotalBytesRead += iBytesRead;
                                 fsExtractedFile.Write(byBuffer, 0, iBytesRead);
                             }
                             iTotalBytesRead += iBytesRead;
